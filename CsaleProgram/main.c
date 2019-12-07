@@ -13,7 +13,7 @@
 
 int main()
 {
-//    char ch;
+    //char ch[10];
 //    ch = get_char();
 //    printf("%c", ch);
 //   system("help.png");
@@ -21,5 +21,11 @@ int main()
   //Begin_page_windows();
   Begin_page();
   //Help();
+  //fflush(stdin);
+    //char ch[20];
+    //int flag = 0;
+    //gets(ch);
+    //flag = check_username_std(ch);
+    //printf("%d", flag);
     return 0;
 }

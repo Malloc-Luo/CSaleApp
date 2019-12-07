@@ -16,7 +16,7 @@ int Help_windows(int cmd)
     system("help.html");
 
     endline; newline;
-    beginline; printf("按任意键返回.."); newline;
+    beginline; printf("鎸変换鎰忛敭缁х画.."); newline;
     beginline; command_char();
     getch();
 

@@ -6,6 +6,7 @@
 
 void get_string(char *data)
 {
+    fflush(stdin);
     gets(data);
     fflush(stdin);
 }
@@ -16,6 +17,7 @@ void get_string(char *data)
 char get_char(void)
 {
     char ch;
+    fflush(stdin);
     ch = getchar();
     fflush(stdin);
 
@@ -44,13 +46,13 @@ void error_remind(int error_type)
             printf("用户名不可用，请按要求填写");
             break;
         case USERNAME_EXIST:
-            printf("用户名不可以，该用户名已被使用，请重新填写");
+            printf("用户名不可用，该用户名已被使用，请重新填写");
             break;
         case USERNAME_NOT_EXIST:
             printf("用户不存在，请重新输入");
             break;
         case PASSWORD_DISABLE:
-            printf("密码不可用，请仔细阅读规范");
+            printf("密码不可用，请按要求填写");
             break;
         case PASSWORD_DIFFERENT:
             printf("密码验证不符合，请重新输入");

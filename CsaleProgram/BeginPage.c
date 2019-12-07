@@ -51,7 +51,12 @@ int Begin_page_windows()
 
     if(OnlineFlag == ONLINE)
     {
-        beginline; printf("$-> ×¢ÏúµÇÂ¼        ->[5]"); newline;
+        beginline; printf("$-> ×¢ÏúµÇÂ¼     ->[5]"); newline;
+    }
+
+    if(OnlineFlag == LEAVE)
+    {
+        beginline; printf("$-> Íü¼ÇÃÜÂë£¿   ->[6]"); newline;
     }
 
     do
@@ -93,6 +98,7 @@ int Begin_page_callback(int cmd)
     switch(cmd)
     {
         case LOGIN:
+            Login();
             break;
         case SIGNIN:
             break;
@@ -106,11 +112,11 @@ int Begin_page_callback(int cmd)
             break;
         case SIGNOUT:
             break;
+        case FINDPASSWORD:
+            break;
         default:
             break;
     }
 
     return Command;
-
-
 }

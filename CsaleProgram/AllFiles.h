@@ -14,14 +14,18 @@
 #include <stdlib.h>
 //#include <thread>
 #include <string.h>
+#include <conio.h>
 
 #include "BeginPage.h"
 #include "Login.h"
+#include "help.h"
+#include "exit.h"
 
 #define endline   printf("\n\n\n")
 #define newline   printf("\n")
 #define middle    printf("                      ")
 #define beginline {newline; middle; middle; }
+#define CLS system("cls")
 
 //error type
 #define NOCOMMAND          0x01
@@ -32,10 +36,13 @@
 #define PASSWORD_ERROR     0x06
 #define USERNAME_NOT_EXIST 0x07
 
-#define CONFIRM 1
-#define CANCEL  2
+#define CONFIRM 101
+#define CANCEL  202
+#define PASS    303
 
 #define _EXIT 242
+
+
 
 void get_string(char *data);
 

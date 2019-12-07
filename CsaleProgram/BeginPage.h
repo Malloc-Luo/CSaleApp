@@ -32,6 +32,7 @@ int Begin_page_windows(void);
 #define HELP        0x03 //°ïÖú
 #define EXIT        0x04 //ÍË³ö
 #define SIGNOUT     0x05 //×¢ÏúµÇÂ¼
+#define FINDPASSWORD 0x06 //ÕÒ»ØÃÜÂë
 
 int Begin_page_callback(int flag);
 

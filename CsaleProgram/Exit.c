@@ -31,10 +31,10 @@ int Exit_callback(int cmd)
     int Command = 0;
     switch(cmd)
     {
-        case CONFIRM:
+        case 1:
             Command = _EXIT;
             break;
-        case CANCEL:
+        case 2:
             Command = CANCEL;
             break;
         default:
