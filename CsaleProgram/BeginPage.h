@@ -33,6 +33,8 @@ int Begin_page_windows(void);
 #define EXIT        0x04 //ÍË³ö
 #define SIGNOUT     0x05 //×¢ÏúµÇÂ¼
 #define FINDPASSWORD 0x06 //ÕÒ»ØÃÜÂë
+#define HOMEPAGE    0x01
+#define PERSION     0x02
 
 int Begin_page_callback(int flag);
 

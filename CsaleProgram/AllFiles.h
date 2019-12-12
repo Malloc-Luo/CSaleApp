@@ -10,6 +10,7 @@
 #ifndef __ALL_FILES_H__
 #define __ALL_FILES_H__
 
+#include <windows.h>
 #include <stdio.h>
 #include <stdlib.h>
 //#include <thread>
@@ -17,13 +18,15 @@
 #include <conio.h>
 
 #include "BeginPage.h"
+#include "Help.h"
+#include "Exit.h"
 #include "Login.h"
-#include "help.h"
-#include "exit.h"
+#include "Signin.h"
+#include "FindPassword.h"
 
 #define endline   printf("\n\n\n")
 #define newline   printf("\n")
-#define middle    printf("                      ")
+#define middle    printf("                    ")
 #define beginline {newline; middle; middle; }
 #define CLS system("cls")
 
@@ -35,6 +38,7 @@
 #define PASSWORD_DIFFERENT 0x05
 #define PASSWORD_ERROR     0x06
 #define USERNAME_NOT_EXIST 0x07
+#define TRY_TOOMANY        0x08
 
 #define CONFIRM 101
 #define CANCEL  202
@@ -42,6 +46,8 @@
 
 #define _EXIT 242
 
+
+/*如果在函数执行中某个变量被赋值为 CANCEL 则 return CANCEL*/
 
 
 void get_string(char *data);
@@ -51,6 +57,8 @@ char get_char(void);
 void command_char(void);
 
 void error_remind(int );
+
+
 
 
 

@@ -43,14 +43,26 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="Exit.h" />
+		<Unit filename="FindPassword.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="FindPassword.h" />
 		<Unit filename="Help.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="Help.h" />
+		<Unit filename="HomePage.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="HomePage.h" />
 		<Unit filename="Login.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="Login.h" />
+		<Unit filename="Signin.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Signin.h" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>

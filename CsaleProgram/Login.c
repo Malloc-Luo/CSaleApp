@@ -49,7 +49,12 @@ int Login_windows(int cmd, User_Inf * user_p)
                 beginline; error_remind(flag); newline;
             }
 
-        }while(flag == USERNAME_DISABLE);
+            if(flag == USERNAME_EXIST)
+            {
+                beginline; error_remind(flag); newline;
+            }
+
+        }while(flag == USERNAME_DISABLE || flag == USERNAME_EXIST);
 
         if(flag == CANCEL)
             break;
@@ -132,13 +137,13 @@ int Login_windows(int cmd, User_Inf * user_p)
 int Login_create_user_file(int cmd, User_Inf * user_p)
 {
     FILE * userf = NULL;
-    char filename[50] = "D:\\userinformation\\NEU";
+    char filename[50] = "userinformation\\NEU";
     char type[] = ".user";
-    char username[20];
+//    char username[20];
     char password[20];
     char phone[15];
     char email[30];
-    int flag = 0;
+//    int flag = 0;
     int write_flag = 0;
 
     if(cmd == CANCEL)
@@ -152,8 +157,7 @@ int Login_create_user_file(int cmd, User_Inf * user_p)
     strcpy(phone, user_p->phone);
     strcpy(email, user_p->email);
 
-    userf = fopen(filename, 'w');
-
+    userf = fopen(filename, "w");
     //创建用户失败
     if(userf == CREATE_ERROR)
     {
@@ -178,15 +182,28 @@ int Login_create_user_file(int cmd, User_Inf * user_p)
     fseek(userf, 0L, SEEK_END);
     fputc('+', userf);
 
+    //第一次登录为 1
+    fputc('1', userf);
+    fputc('+', userf);
     fclose(userf);
-    return 0;
+
+    return CREATE_SUCCESS;
 }
 
 int Login_callback(int cmd)
 {
     if(cmd == CANCEL)
         return CANCEL;
-    return 0;
+    else
+    {
+        system("cls");
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_RED|BACKGROUND_INTENSITY|BACKGROUND_RED|BACKGROUND_GREEN|BACKGROUND_BLUE);
+        endline; endline; newline;
+        beginline; printf("注册成功！  按任意键返回..");
+        getch();
+    }
+
+    return cmd;
 }
 
 
@@ -202,7 +219,14 @@ int check_username_std(char *username)
     int i=0;
     int len;
     int EN = 1;
+//    int exit_flag = 0;
+    char filename[50] = "userinformation\\NEU";
+    char type[] = ".user";
+    FILE * fp;
+
     len = strlen(username);
+    strcat(filename, username);
+    strcat(filename, type);
 
     if(len==1 && username[0]=='1')
     {
@@ -226,6 +250,12 @@ int check_username_std(char *username)
                 break;
             }
         }
+    }
+
+    if((fp = fopen(filename, "r")) != NULL)
+    {
+        flag = USERNAME_EXIST;
+        fclose(fp);
     }
 
     return flag;
@@ -310,5 +340,7 @@ int check_email(char *email)
 
     return flag;
 }
+
+
 
 

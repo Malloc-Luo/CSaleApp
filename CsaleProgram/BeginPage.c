@@ -19,7 +19,7 @@ int Begin_page(void)
             break;
     }
 
-    return 0;
+    return cmd;
 }
 
 
@@ -33,10 +33,15 @@ int Begin_page_windows()
     int flag = 0;
 
     system("cls");
-
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_BLUE|BACKGROUND_INTENSITY|BACKGROUND_RED|BACKGROUND_GREEN|BACKGROUND_BLUE);
     //show windows simpily
     endline; endline; newline;
     middle; printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~开始~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"); endline;
+    if(OnlineFlag == ONLINE)
+    {
+        beginline; printf("$-> 主页         ->[1]"); newline;
+        beginline; printf("$-> 个人中心     ->[2]"); newline;
+    }
     if(OnlineFlag == LEAVE)
     {
         beginline; printf("$-> 登录         ->[1]"); newline;
@@ -66,7 +71,7 @@ int Begin_page_windows()
 
         if(OnlineFlag == LEAVE)
         {
-            if(cmd != 1 && cmd != 2 && cmd != 3 && cmd != 4)
+            if(cmd != 1 && cmd != 2 && cmd != 3 && cmd != 4 && cmd !=6)
                 flag = 1;
             else
                 flag = 0;
@@ -95,27 +100,48 @@ int Begin_page_windows()
 int Begin_page_callback(int cmd)
 {
     int Command = 0;
-    switch(cmd)
+
+    if(OnlineFlag == ONLINE)
     {
-        case LOGIN:
-            Login();
-            break;
-        case SIGNIN:
-            break;
-       /*help complate*/
-        case HELP:
-            Help();
-            break;
-       /*exit complate*/
-        case EXIT:
-            Command = Exit();
-            break;
-        case SIGNOUT:
-            break;
-        case FINDPASSWORD:
-            break;
-        default:
-            break;
+        switch(cmd)
+        {
+            case HOMEPAGE:
+                break;
+            case PERSION:
+                break;
+            case HELP:
+                Help();
+                break;
+            case SIGNOUT:
+                break;
+            default:
+                break;
+        }
+    }
+
+    if(OnlineFlag == LEAVE)
+    {
+        switch(cmd)
+        {
+            case LOGIN:
+                Command = Login();
+                break;
+            case SIGNIN:
+                Command = Signin();
+                break;
+        /*help complate*/
+            case HELP:
+                Help();
+                break;
+        /*exit complate*/
+            case EXIT:
+                Command = Exit();
+                break;
+            case FINDPASSWORD:
+                break;
+            default:
+                break;
+        }
     }
 
     return Command;

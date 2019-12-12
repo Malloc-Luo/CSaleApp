@@ -12,6 +12,7 @@ int Exit(void)
 
 int Exit_windows(int cmd)
 {
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_RED|BACKGROUND_INTENSITY|BACKGROUND_RED|BACKGROUND_GREEN|BACKGROUND_BLUE);
     int Command = 0;
     system("cls");
     endline; newline;

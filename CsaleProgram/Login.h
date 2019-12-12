@@ -10,6 +10,8 @@
 #include "AllFiles.h"
 
 #define CREATE_ERROR NULL
+#define CREATE_SUCCESS 17
+
 typedef struct
 {
     char province[30];
@@ -19,15 +21,24 @@ typedef struct
 
 }Address_Inf;
 
-typedef struct
+struct _User_Inf
 {
     char username[20];
+    int usernameLen;
     char password[20];
+    int passwordLen;
     char phone[15];
+    int phoneLen;
     char email[30];
+    int emailLen;
+    char timeflag;
     Address_Inf address;
 
-}User_Inf;
+};
+
+#define User_Inf struct _User_Inf
+
+//extern User_Inf ;
 
 int Login();
 
