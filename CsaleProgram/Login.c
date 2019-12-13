@@ -137,7 +137,7 @@ int Login_windows(int cmd, User_Inf * user_p)
 int Login_create_user_file(int cmd, User_Inf * user_p)
 {
     FILE * userf = NULL;
-    char filename[50] = "userinformation\\NEU";
+    char filename[80] = "D:\\ALessionProject\\Users\\NEU";
     char type[] = ".user";
 //    char username[20];
     char password[20];
@@ -157,7 +157,7 @@ int Login_create_user_file(int cmd, User_Inf * user_p)
     strcpy(phone, user_p->phone);
     strcpy(email, user_p->email);
 
-    userf = fopen(filename, "w");
+    userf = fopen(filename, "wb");
     //创建用户失败
     if(userf == CREATE_ERROR)
     {
@@ -169,22 +169,11 @@ int Login_create_user_file(int cmd, User_Inf * user_p)
         return CANCEL;
     }
 
-    //'+' 作为分隔符
-    write_flag = fputs(password, userf);
-    fseek(userf, 0L, SEEK_END);
-    fputc('+', userf);
+    write_flag = fwrite(password, CHAR_SIZE, 20, userf);
+    write_flag = fwrite(phone, CHAR_SIZE, 20, userf);
+    write_flag = fwrite(email, CHAR_SIZE, 30, userf);
+    write_flag = fwrite("1", CHAR_SIZE, 1, userf);
 
-    write_flag = fputs(phone, userf);
-    fseek(userf, 0L, SEEK_END);
-    fputc('+', userf);
-
-    write_flag = fputs(email, userf);
-    fseek(userf, 0L, SEEK_END);
-    fputc('+', userf);
-
-    //第一次登录为 1
-    fputc('1', userf);
-    fputc('+', userf);
     fclose(userf);
 
     return CREATE_SUCCESS;
@@ -220,7 +209,7 @@ int check_username_std(char *username)
     int len;
     int EN = 1;
 //    int exit_flag = 0;
-    char filename[50] = "userinformation\\NEU";
+    char filename[50] = "D:\\ALessionProject\\Users\\NEU";
     char type[] = ".user";
     FILE * fp;
 

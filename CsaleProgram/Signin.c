@@ -130,7 +130,7 @@ int Signin_callback(int cmd)
 int Check_Name(char *name)
 {
     int flag = 0;
-    char filename[50] = "userinformation\\NEU";
+    char filename[50] = "D:\\ALessionProject\\Users\\NEU";
     char type[] = ".user";
     FILE * fp;
 
@@ -171,59 +171,32 @@ int Get_user_inf(Def_User_Inf *userp)
     FILE * userf;
     char ch_pass, ch_ph, ch_email ,ch;
 
-    char filename[50] = "userinformation\\NEU";
+    char filename[50] = "D:\\ALessionProject\\Users\\NEU";
     char type[] = ".user";
     int i = 0;
 
     strcat(filename, userp->username);
     strcat(filename, type);
 
-    if((userf = fopen(filename, "r")) == NULL)
+    if((userf = fopen(filename, "rb")) == NULL)
     {
         beginline; printf("打开用户文件出现未知错误，请联系管理员解决.."); newline;
         return CANCEL;
     }
 
-    i = 0;
-    while((ch_pass = fgetc(userf)) != '+')
-    {
-        userp->password[i] = ch_pass;
-        i++;
-    }
-    userp->passwordLen = strlen(userp->password);
+    fread(userp->password, CHAR_SIZE, 20, userf);
+    fread(userp->phone, CHAR_SIZE, 20, userf);
+    fread(userp->email, CHAR_SIZE, 30, userf);
 
-    puts(userp->password);
-
-    i = 0;
-    while((ch_ph = fgetc(userf)) != '+')
-    {
-        userp->phone[i] = ch_ph;
-        i ++;
-    }
-    userp->phoneLen = strlen(userp->phone);
-
-    puts(userp->phone);
-
-    i = 0;
-    while((ch_email = fgetc(userf)) != '+')
-    {
-        userp->email[i] = ch_email;
-        i ++;
-    }
-    userp->emailLen = strlen(userp->email);
-
+ /*   puts(userp->password);
     puts(userp->email);
-
-    while((ch = fgetc(userf)) != '+')
-    {
-        userp->timeflag = ch;
-    }
-
-    putchar(userp->timeflag);
+    puts(userp->phone);*/
 
     fclose(userf);
 
     return 0;
 }
+
+
 
 

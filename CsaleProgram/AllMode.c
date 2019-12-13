@@ -68,7 +68,61 @@ void error_remind(int error_type)
     }
 }
 
+int prepare_for_program(void)
+{
+    FILE * fp;
+    if(_access("D:\\ALessionProject", 0) == -1)
+    {
+        Frist_time_to_use();
+        _mkdir("D:\\ALessionProject");
 
+        fp = fopen("D:\\ALessionProject\\readme.txt", "w");
+        fputs("1 flag\n", fp);
+        fputs("this is a test file, you can delete it now", fp);
+        fprintf(fp, "\n\t李昱棋\n\t20184023\n\t自动化1803");
+
+        fclose(fp);
+    }
+
+    if(_access("D:\\ALessionProject\\Users", 0) == -1)
+    {
+        _mkdir("D:\\ALessionProject\\Users");
+    }
+
+    if(_access("D:\\ALessionProject\\Manager", 0) == -1)
+    {
+         _mkdir("D:\\ALessionProject\\Manager");
+    }
+    return 0;
+}
+
+
+int Frist_time_to_use(void)
+{
+    endline;
+    action_mode();
+    endline; endline;
+    beginline; printf("欢迎使用本购物系统\n"); newline;
+    beginline; printf("须知："); newline;
+    beginline; printf("用户信息将被储存于  d:\\ALessionProject\\Users 文件夹中\n");
+    middle; middle; printf("用户文件 NEUusername.user"); newline;
+    beginline; beginline; printf("任意键开始使用..");
+
+    getch();
+    system("cls");
+}
+
+int action_mode(void)
+{
+    int i = 0;
+    for(i = 0;i<120;i++)
+    {
+        putchar('|');
+        Sleep(10);
+    }
+
+    return 0;
+}
 
 
 

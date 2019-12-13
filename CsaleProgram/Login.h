@@ -11,6 +11,7 @@
 
 #define CREATE_ERROR NULL
 #define CREATE_SUCCESS 17
+#define CHAR_SIZE sizeof(char)
 
 typedef struct
 {
@@ -27,7 +28,7 @@ struct _User_Inf
     int usernameLen;
     char password[20];
     int passwordLen;
-    char phone[15];
+    char phone[20];
     int phoneLen;
     char email[30];
     int emailLen;

@@ -13,9 +13,12 @@
 #include <windows.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <process.h>
 //#include <thread>
 #include <string.h>
 #include <conio.h>
+#include <io.h>
+#include <direct.h>
 
 #include "BeginPage.h"
 #include "Help.h"
@@ -57,6 +60,12 @@ char get_char(void);
 void command_char(void);
 
 void error_remind(int );
+
+int prepare_for_program(void);
+
+int Frist_time_to_use(void);
+
+int action_mode(void);
 
 
 
