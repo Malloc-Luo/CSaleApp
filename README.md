@@ -3,7 +3,9 @@
 ******
 
 **初步设想**
-> 每个用户对应一个数据文件，文件格式 "NEU + username.user"，例如用户名：Malloc，数据文件NEUMalloc.user  
+> 每个用户对应一个数据文件，文件格式 "NEU + username.user"，例如用户名：Malloc，数据文件NEUMalloc.user  ,二进制读写  
+> 用户文件位置 D:\\ALessionProject\\Users  
+> 管理员文件位置 D:\ALessionProject\\Manager  
 > 建立用户名索引文件 user.dat  
 > 考虑对文件进行加密  
 * <font color=red>程序开始界面</font>
