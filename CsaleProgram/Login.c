@@ -1,11 +1,11 @@
 #include "Login.h"
 
+User_Inf user;
 /*
  * 登录模块
  */
 int Login()
 {
-    User_Inf user;
     int cmd = 0;
 
     cmd = Login_windows(cmd, &user);
@@ -16,6 +16,7 @@ int Login()
 
     return cmd;
 }
+
 
 /*
  * 绘制注册界面并接收指令
@@ -181,6 +182,7 @@ int Login_create_user_file(int cmd, User_Inf * user_p)
 
 int Login_callback(int cmd)
 {
+    FILE * fp;
     if(cmd == CANCEL)
         return CANCEL;
     else
@@ -188,6 +190,13 @@ int Login_callback(int cmd)
         system("cls");
         SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_RED|BACKGROUND_INTENSITY|BACKGROUND_RED|BACKGROUND_GREEN|BACKGROUND_BLUE);
         endline; endline; newline;
+
+        //添加信息到 Allusers.neu 中
+        fp = fopen("D:\\ALessionProject\\Manager\\AllUsers.neu", "ab+");
+        fseek(fp, 0L, SEEK_END);
+        fwrite(user.username, CHAR_SIZE, 20, fp);
+        fclose(fp);
+
         beginline; printf("注册成功！  按任意键返回..");
         getch();
     }
@@ -329,7 +338,4 @@ int check_email(char *email)
 
     return flag;
 }
-
-
-
 

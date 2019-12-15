@@ -9,6 +9,7 @@
 
 #include "AllFiles.h"
 
+#define ADMINISTATOR 0x199
 
 typedef struct
 {
@@ -33,6 +34,8 @@ typedef struct
     Def_Address_Inf address;
 
 }Def_User_Inf;
+
+extern Def_User_Inf USER;
 
 //#define User_Inf struct _User_Inf
 

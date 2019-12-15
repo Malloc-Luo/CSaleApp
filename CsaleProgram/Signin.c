@@ -13,17 +13,18 @@ int Signin(void)
     return cmd;
 }
 
-
+/*用户信息*/
+Def_User_Inf USER;
 /*
  * 绘制登录界面并接收指令
- * return CANCEL 取消
+ * return CANCEL         取消
  * return FORGETPASSWORD 忘记密码
- * return 0 成功登录
+ * return 0              成功登录
  */
 int Signin_windows(int cmd)
 {
     static int try_times = 0;
-    Def_User_Inf user;
+//    Def_User_Inf user;
     FILE * userf;
     int name_flag = 0;
     int inf_flag = 0;
@@ -39,10 +40,10 @@ int Signin_windows(int cmd)
     {
         beginline; printf("$-> 用户名：         $-> 取消 ->[1]"); newline;
         beginline; command_char();
-        get_string(user.username);
-        name_flag = Check_Name(user.username);
-        if(name_flag == CANCEL)
-            return CANCEL;
+        get_string(USER.username);
+        name_flag = Check_Name(USER.username);
+        if(name_flag == CANCEL || name_flag == ADMINISTATOR)
+            return name_flag;
 
         if(name_flag == USERNAME_NOT_EXIST)
         {
@@ -53,12 +54,11 @@ int Signin_windows(int cmd)
     }while(name_flag == USERNAME_NOT_EXIST);
 
     //从文件中读取用户信息
-    inf_flag = Get_user_inf(&user);
+    inf_flag = Get_user_inf(&USER);
+    init_buff();
 
     if(inf_flag == CANCEL)
         return CANCEL;
-
- //   get_string(temp_password);
 
     do
     {
@@ -66,9 +66,9 @@ int Signin_windows(int cmd)
         beginline; printf("                    $-> 忘记密码 ->[2]"); newline;
         beginline; command_char();
         get_string(temp_password);
-        pass_flag = Check_Password(temp_password, user.password);
-        if(pass_flag == CANCEL)
-            return CANCEL;
+        pass_flag = Check_Password(temp_password, USER.password);
+        if(pass_flag == CANCEL || pass_flag == FINDPASSWORD)
+            return pass_flag;
         if(pass_flag != 0)
         {
             beginline; error_remind(PASSWORD_ERROR); newline;
@@ -78,23 +78,17 @@ int Signin_windows(int cmd)
         //尝试次数过多，提示找回密码
         if(try_times >=4)
         {
+            try_times = 0;
             beginline; error_remind(TRY_TOOMANY); newline;
             beginline; printf("忘记密码？            $-> 取消      ->[1]"); newline;
             beginline; printf("                      $-> 找回密码  ->[2]"); newline;
             beginline; command_char();
             command = get_char();
 
-            switch(command)
-            {
-                try_times = 0;
-                case '1':
-                    return CANCEL;
-                case '2':
-                    return FINDPASSWORD;
-                default:
-                    return CANCEL;
-                    break;
-            }
+            if(command == '2')
+                return FINDPASSWORD;
+            else
+                return CANCEL;
         }
 
     }while(pass_flag != 0 );
@@ -105,18 +99,16 @@ int Signin_windows(int cmd)
 
 int Signin_check_information(int cmd)
 {
-    if(cmd == CANCEL)
-        return CANCEL;
+    if(cmd == CANCEL || cmd == FINDPASSWORD || cmd == ADMINISTATOR)
+        return cmd;
 
     return 0;
 }
 
 int Signin_callback(int cmd)
 {
-    if(cmd == CANCEL)
-        return CANCEL;
-    if(cmd == FINDPASSWORD)
-        return FINDPASSWORD;
+    if(cmd == CANCEL || cmd == FINDPASSWORD || cmd == ADMINISTATOR)
+        return cmd;
 
     return 0;
 }
@@ -133,6 +125,9 @@ int Check_Name(char *name)
     char filename[50] = "D:\\ALessionProject\\Users\\NEU";
     char type[] = ".user";
     FILE * fp;
+
+    if(strcmp(name, "neu") == 0)
+        return ADMINISTATOR;
 
     strcat(filename, name);
     strcat(filename, type);
@@ -153,8 +148,13 @@ int Check_Name(char *name)
 int Check_Password(char *input, char *trueone)
 {
     int cmd = 0;
-    if(strlen(input) == 1 && input[0] == '1')
-        return CANCEL;
+    if(strlen(input) == 1)
+    {
+        if(input[0] == '1')
+            return CANCEL;
+        if(input[0] == '2')
+            return FINDPASSWORD;
+    }
 
     cmd = strcmp(input, trueone);
     return cmd;
@@ -188,15 +188,7 @@ int Get_user_inf(Def_User_Inf *userp)
     fread(userp->phone, CHAR_SIZE, 20, userf);
     fread(userp->email, CHAR_SIZE, 30, userf);
 
- /*   puts(userp->password);
-    puts(userp->email);
-    puts(userp->phone);*/
-
     fclose(userf);
 
     return 0;
 }
-
-
-
-

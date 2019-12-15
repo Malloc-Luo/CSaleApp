@@ -38,4 +38,6 @@ int Begin_page_windows(void);
 
 int Begin_page_callback(int flag);
 
+static int check_command(char );
+
 #endif // __BEGIN_PAGE_H__

@@ -26,6 +26,10 @@
 #include "Login.h"
 #include "Signin.h"
 #include "FindPassword.h"
+#include "HomePage.h"
+#include "goods.h"
+#include "PersonalCenter.h"
+#include "Administrator.h"
 
 #define endline   printf("\n\n\n")
 #define newline   printf("\n")
@@ -48,6 +52,15 @@
 #define PASS    303
 
 #define _EXIT 242
+
+typedef struct
+{
+    char username[20];
+    char password[20];
+}_Administ;
+
+//管理员
+extern _Administ MainUser;
 
 
 /*如果在函数执行中某个变量被赋值为 CANCEL 则 return CANCEL*/

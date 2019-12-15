@@ -31,6 +31,10 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="Administrator.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Administrator.h" />
 		<Unit filename="AllFiles.h" />
 		<Unit filename="AllMode.c">
 			<Option compilerVar="CC" />
@@ -59,10 +63,18 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="Login.h" />
+		<Unit filename="PersonalCenter.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="PersonalCenter.h" />
 		<Unit filename="Signin.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="Signin.h" />
+		<Unit filename="goods.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="goods.h" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>

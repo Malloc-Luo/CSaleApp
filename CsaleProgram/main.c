@@ -64,9 +64,8 @@ void test(void)
 
 int main()
 {
- //   system("color f0");
-  //  prepare_for_program();
-
+    system("color f0");
+    prepare_for_program();
     Begin_page();
   //  test();
     return 0;

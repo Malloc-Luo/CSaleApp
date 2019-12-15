@@ -61,9 +61,21 @@ int Begin_page_windows()
 
     if(OnlineFlag == LEAVE)
     {
-        beginline; printf("$-> Õ¸º«√‹¬Î£ø   ->[6]"); newline;
+ //       beginline; printf("$-> Õ¸º«√‹¬Î£ø   ->[6]"); newline;
     }
 
+    cmd = check_command(cmd);
+
+    return cmd;
+}
+
+
+/*
+ * ºÏ≤È√¸¡Ó
+ */
+static int check_command(char cmd)
+{
+    int flag = 0;
     do
     {
         beginline; command_char();
@@ -79,7 +91,7 @@ int Begin_page_windows()
 
         if(OnlineFlag == ONLINE)
         {
-            if(cmd != 3 && cmd != 5)
+            if(cmd != 3 && cmd != 5 && cmd != 1 && cmd != 2)
                 flag = 1;
             else
                 flag = 0;
@@ -105,17 +117,19 @@ int Begin_page_callback(int cmd)
     {
         switch(cmd)
         {
-            case HOMEPAGE:
-                break;
-            case PERSION:
-                break;
-            case HELP:
-                Help();
-                break;
-            case SIGNOUT:
-                break;
-            default:
-                break;
+        case HOMEPAGE:
+            HomePage();
+            break;
+        case PERSION:
+            PersonalCenter();
+            break;
+        case HELP:
+            Help();
+            break;
+        case SIGNOUT:
+            break;
+        default:
+            break;
         }
     }
 
@@ -123,26 +137,28 @@ int Begin_page_callback(int cmd)
     {
         switch(cmd)
         {
-            case LOGIN:
-                Command = Login();
-                break;
-            case SIGNIN:
-                Command = Signin();
-                break;
-        /*help complate*/
-            case HELP:
-                Help();
-                break;
-        /*exit complate*/
-            case EXIT:
-                Command = Exit();
-                break;
-            case FINDPASSWORD:
-                break;
-            default:
-                break;
+        case LOGIN:
+            Command = Login();
+            break;
+        case SIGNIN:
+            Command = Signin();
+            if(Command == FINDPASSWORD || Command == ADMINISTATOR)
+                cmd = Command;
+            break;
+        case HELP:
+            Help();
+            break;
+        case EXIT:
+            Command = Exit();
+            break;
+        default:
+            break;
         }
-    }
 
+        if(cmd == FINDPASSWORD)
+            FindPassword();
+        if(cmd == ADMINISTATOR)
+            Administrator();
+    }
     return Command;
 }
