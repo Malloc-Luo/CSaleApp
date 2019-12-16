@@ -5,9 +5,13 @@
 **初步设想**
 > 每个用户对应一个数据文件，文件格式 "NEU + username.user"，例如用户名：Malloc，数据文件NEUMalloc.user  ,二进制读写  
 > 用户文件位置 D:\\ALessionProject\\Users  
-> 管理员文件位置 D:\ALessionProject\\Manager  
+> 管理员文件位置 D:\\ALessionProject\\Manager  
+> 用户日志文件位置 D:\\ALessionProject\\UserLog
 > 建立用户名索引文件 user.dat  
 > 考虑对文件进行加密  
+* <font color=red>程序准备</font>
+>> 检查文件夹是否存在，不存在则创建之  
+>> 读入管理员信息
 * <font color=red>程序开始界面</font>
 >> 操作引导
 * <font color=red>用户登录</font>
@@ -20,11 +24,13 @@
 >> 完善个人信息  
 >> 确认注册创建用户文件
 * <font color=red>找回密码</font>  
+>> 根据电话或邮箱
 * <font color=red>管理员模式</font>
+>> 通过特定用户名及密码进入  
 >> 添加、删除、修改商品  
->> 删除用户  
+>> 查看用户信息
 * <font color=red>商品详情</font>
->> .html文件，内附淘宝链接
+>> .html文件
 * <font color=red>个人中心</font>
 >> 选择商品  
 >> 购物车  
@@ -44,5 +50,5 @@
 *其它想法*
 * **命令行模式？**
 * 多线程？
-* 编写用户手册
+* 简单的过渡动画
 
