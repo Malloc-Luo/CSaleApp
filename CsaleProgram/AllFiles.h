@@ -19,6 +19,7 @@
 #include <conio.h>
 #include <io.h>
 #include <direct.h>
+#include <time.h>
 
 #include "BeginPage.h"
 #include "Help.h"
@@ -30,12 +31,13 @@
 #include "goods.h"
 #include "PersonalCenter.h"
 #include "Administrator.h"
+#include "UserLog.h"
 
 #define endline   printf("\n\n\n")
 #define newline   printf("\n")
 #define middle    printf("                    ")
 #define beginline {newline; middle; middle; }
-#define CLS system("cls")
+#define CLS       system("cls")
 
 //error type
 #define NOCOMMAND          0x01
@@ -57,6 +59,8 @@ typedef struct
 {
     char username[20];
     char password[20];
+    int times;
+    int usernumber;
 }_Administ;
 
 //π‹¿Ì‘±
@@ -80,7 +84,7 @@ int Frist_time_to_use(void);
 
 int action_mode(void);
 
-
+void get_password(char *);
 
 
 

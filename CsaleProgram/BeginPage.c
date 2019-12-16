@@ -127,6 +127,13 @@ int Begin_page_callback(int cmd)
             Help();
             break;
         case SIGNOUT:
+            Command = Exit();
+            if(Command == _EXIT)
+            {
+                OnlineFlag = LEAVE;
+                mark_log(USER.username, _Signout);
+                Command = CANCEL;
+            }
             break;
         default:
             break;
@@ -158,7 +165,7 @@ int Begin_page_callback(int cmd)
         if(cmd == FINDPASSWORD)
             FindPassword();
         if(cmd == ADMINISTATOR)
-            Administrator();
+            Command = Administrator();
     }
     return Command;
 }

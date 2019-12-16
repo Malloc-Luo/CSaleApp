@@ -71,6 +71,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="Signin.h" />
+		<Unit filename="UserLog.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="UserLog.h" />
 		<Unit filename="goods.c">
 			<Option compilerVar="CC" />
 		</Unit>

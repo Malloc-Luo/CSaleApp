@@ -66,7 +66,7 @@ int Login_windows(int cmd, User_Inf * user_p)
             beginline; printf("$-> 设置密码：         ($-> 取消 ->[1])"); newline;
             beginline; printf("    (长度：6~20  仅由数字、字母、特殊字符（@ # *）中的至多三种组成"); newline;
             beginline; command_char();
-            get_string(user_p->password);
+            get_password(user_p->password);
             flag = check_password_std(user_p->password);
 
             if(flag == CANCEL)
@@ -83,7 +83,7 @@ int Login_windows(int cmd, User_Inf * user_p)
                 {
                     beginline; printf("$-> 确认密码：        ($-> 取消 ->[1])"); newline;
                     beginline; command_char();
-                    get_string(temppassword);
+                    get_password(temppassword);
                     temp_flag = check_password_std(temppassword);
                     if(temp_flag == CANCEL)
                         break;
@@ -140,11 +140,9 @@ int Login_create_user_file(int cmd, User_Inf * user_p)
     FILE * userf = NULL;
     char filename[80] = "D:\\ALessionProject\\Users\\NEU";
     char type[] = ".user";
-//    char username[20];
     char password[20];
-    char phone[15];
+    char phone[20];
     char email[30];
-//    int flag = 0;
     int write_flag = 0;
 
     if(cmd == CANCEL)
@@ -169,11 +167,14 @@ int Login_create_user_file(int cmd, User_Inf * user_p)
         getch();
         return CANCEL;
     }
+    user_p->timeflag = 0;
+    user_p->number = MainUser.usernumber + 1;
 
     write_flag = fwrite(password, CHAR_SIZE, 20, userf);
     write_flag = fwrite(phone, CHAR_SIZE, 20, userf);
     write_flag = fwrite(email, CHAR_SIZE, 30, userf);
-    write_flag = fwrite("1", CHAR_SIZE, 1, userf);
+    write_flag = fwrite(&user_p->timeflag, INT_SIZE, 1, userf);
+    write_flag = fwrite(&user_p->number, INT_SIZE, 1, userf);
 
     fclose(userf);
 
@@ -196,6 +197,12 @@ int Login_callback(int cmd)
         fseek(fp, 0L, SEEK_END);
         fwrite(user.username, CHAR_SIZE, 20, fp);
         fclose(fp);
+
+        //保存到管理员信息
+        MainUser.usernumber ++;
+        save_Administrator_information();
+
+        mark_log(user.username, _Login);
 
         beginline; printf("注册成功！  按任意键返回..");
         getch();

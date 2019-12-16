@@ -10,6 +10,8 @@ int PersonalCenter(void)
         cmd = PersonalCenter_windows(cmd);
         cmd = PersonalCenter_deal(cmd);
         cmd = PersonalCenter_callback(cmd);
+        if(cmd == BACKWARD)
+            break;
     }
 
     return cmd;
@@ -19,7 +21,7 @@ int PersonalCenter(void)
 
 int PersonalCenter_windows(int cmd)
 {
-    system("cls");
+    CLS;
     endline; endline; newline;
     middle; printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~个人中心~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"); endline;
     beginline; printf("$-> 修改个人信息   ->[0]"); newline;
@@ -38,11 +40,10 @@ int PersonalCenter_deal(int cmd)
 {
     if(cmd == 0)
         return CHANGE_INF;
-    if(cmd = 1)
+    if(cmd == 1)
         return SHOPPING;
     if(cmd == 2)
         return BACKWARD;
-
 
     return 0;
 }
@@ -53,6 +54,15 @@ int PersonalCenter_callback(int cmd)
 {
     if(cmd == CHANGE_INF)
         cmd = change_user_information();
+    if(cmd == SHOPPING)
+    {
+        CLS;
+        endline; endline; endline;
+        beginline; printf("该功能尚未开放！"); newline;
+        Sleep(1500);
+    }
+    if(cmd == BACKWARD)
+        return BACKWARD;
 
     return 0;
 }
@@ -60,6 +70,32 @@ int PersonalCenter_callback(int cmd)
 User_Inf_Buff USER_Buff;
 
 
+
+int complate_information(void)
+{
+    CLS;
+    endline; endline; endline;
+    beginline; middle; printf("完善地址信息(必填)"); newline;
+    beginline; printf("&-> 省份:"); newline;
+    beginline; command_char();
+    get_string(USER.address.province);
+    beginline; printf("&-> 城市:"); newline;
+    beginline; command_char();
+    get_string(USER.address.city);
+    beginline; printf("&-> 区域:"); newline;
+    beginline; command_char();
+    get_string(USER.address.block);
+    beginline; printf("&-> 街道:"); newline;
+    beginline; command_char();
+    get_string(USER.address.street);
+    CLS;
+    endline; endline; endline;
+    beginline; middle; printf("完成！");
+    Sleep(1200);
+    CLS;
+
+    return 0;
+}
 
 int change_user_information(void)
 {
@@ -88,6 +124,7 @@ int change_user_information(void)
         case 1:
             if(change_username() == CANCEL)
                 return CANCEL;
+            save_information(USER.username);
             break;
         case 2:
             change_pswd_flag = change_password();
@@ -143,6 +180,7 @@ int print_information(void)
     beginline; putchar('|'); printf("c-> [8] 街道  ：%s         ", USER.address.province);
     PRINT_LINE;
     beginline;
+
     return 0;
 }
 
@@ -190,16 +228,30 @@ int save_information(char *name)
    // FILE * defp;
     char filename[80] = "D:\\ALessionProject\\Users\\NEU";
     char oldfilename[80] = "D:\\ALessionProject\\Users\\NEU";
+
+    char logfile[80] = "D:\\ALessionProject\\UserLog\\";
+    char oldlogfile[80] = "D:\\ALessionProject\\UserLog\\";
+
     char type[] = ".user";
+    char logtype[] = ".txt";
+
     int flag;
     strcat(filename, name);
     strcat(filename, type);
+
+    strcat(logfile, name);
+    strcat(logfile, logtype);
 
     if(strcmp(USER.username, USER_Buff.username) != 0)
     {
         strcat(oldfilename, USER_Buff.username);
         strcat(oldfilename, type);
+
+        strcat(oldlogfile, USER_Buff.username);
+        strcat(oldlogfile, logtype);
+
         rename(oldfilename, filename);
+        rename(oldlogfile, logfile);
     }
 
     fp = fopen(filename, "wb");
@@ -215,7 +267,8 @@ int save_information(char *name)
     flag = fwrite(USER.password, CHAR_SIZE, 20, fp);
     flag = fwrite(USER.phone, CHAR_SIZE, 20, fp);
     flag = fwrite(USER.email, CHAR_SIZE, 30, fp);
-    flag = fwrite("2", CHAR_SIZE, 1, fp);
+    flag = fwrite(&USER.timeflag, INT_SIZE, 1, fp);
+    flag = fwrite(&USER.number, INT_SIZE, 1, fp);
     flag = fwrite(USER.address.province, CHAR_SIZE, 30, fp);
     flag = fwrite(USER.address.city, CHAR_SIZE, 30, fp);
     flag = fwrite(USER.address.block, CHAR_SIZE, 30, fp);
@@ -230,6 +283,8 @@ int change_username(void)
 {
     int flag = 0;
     char username_buff[20];
+    FILE * fp;
+    char filename[] = "D:\\ALessionProject\\Manager\\AllUsers.neu";
     beginline; printf("New username:               &-> Cancel ->[1]"); newline;
     while(1)
     {
@@ -245,7 +300,13 @@ int change_username(void)
         else
             break;
     }
+    fp = fopen(filename, "rb+");
+    fseek(fp, (CHAR_SIZE * 20 * (USER.number-1)), SEEK_SET);
+    fwrite(username_buff, CHAR_SIZE, 20, fp);
+    fclose(fp);
+    mark_log(USER.username, Change_name);
     strcpy(USER.username, username_buff);
+
     return 0;
 }
 
@@ -287,7 +348,7 @@ int change_password(void)
         {
             beginline; printf("Previous Password:             $-> Cancel ->[1]"); newline;
             beginline; command_char();
-            get_string(password_buff);
+            get_password(password_buff);
             if(strlen(password_buff) == 1 && password_buff[0] == '1')
                 return CANCEL;
 
@@ -309,7 +370,7 @@ int change_password(void)
     {
         beginline; printf("Enter new password:");
         beginline; command_char();
-        get_string(USER.password);
+        get_password(USER.password);
         passwordflag = check_password_std(USER.password);
         if(passwordflag == PASSWORD_DISABLE)
         {
@@ -327,6 +388,7 @@ int change_password(void)
     system("cls");
     endline; endline; endline;
     beginline; printf("Change password successfully!");
+    mark_log(USER.username, Change_password);
     getch();
     return 0;
 }
@@ -339,7 +401,7 @@ int change_phone(void)
     while(1)
     {
         beginline; command_char();
-        get_string(password_buff);
+        get_password(password_buff);
         if(strlen(password_buff) == 1 && password_buff[0] == '1')
             return CANCEL;
 
@@ -355,6 +417,7 @@ int change_phone(void)
             beginline; error_remind(PASSWORD_ERROR);
         }
     }
+    mark_log(USER.username, Change_information);
     return 0;
 }
 
@@ -365,7 +428,7 @@ int change_email(void)
     while(1)
     {
         beginline; command_char();
-        get_string(password_buff);
+        get_password(password_buff);
         if(strlen(password_buff) == 1 && password_buff[0] == '1')
             return CANCEL;
 
@@ -381,5 +444,29 @@ int change_email(void)
             beginline; error_remind(PASSWORD_ERROR);
         }
     }
+    mark_log(USER.username, Change_information);
     return 0;
+}
+
+
+void Init_user_inf_buff(void)
+{
+    int i = 0;
+    USER_Buff.flag = 0;
+
+    for(i = 0;i<20;i++)
+    {
+        USER_Buff.username[i] = '\0';
+        USER_Buff.password[i] = '\0';
+        USER_Buff.phone[i] = '\0';
+    }
+
+    for(i = 0;i<30;i++)
+    {
+        USER_Buff.email[i] = '\0';
+        USER_Buff.address.province[i] = '\0';
+        USER_Buff.address.city[i] = '\0';
+        USER_Buff.address.block[i] = '\0';
+        USER_Buff.address.street[i] = '0';
+    }
 }

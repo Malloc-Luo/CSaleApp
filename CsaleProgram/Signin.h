@@ -23,14 +23,11 @@ typedef struct
 typedef struct
 {
     char username[20];
-    int usernameLen;
     char password[20];
-    int passwordLen;
-    char phone[15];
-    int phoneLen;
+    char phone[20];
     char email[30];
-    int emailLen;
-    char timeflag;
+    int timeflag;
+    int number;
     Def_Address_Inf address;
 
 }Def_User_Inf;
@@ -52,6 +49,11 @@ int Check_Name(char *);
 int Check_Password(char *, char *);
 
 int Get_user_inf(Def_User_Inf *userp);
+
+//简单的登录过场
+void movie(void);
+
+void Init_user_inf(void);
 
 #endif // __SIGNIN_H__
 

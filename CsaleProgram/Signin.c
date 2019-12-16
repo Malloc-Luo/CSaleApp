@@ -4,6 +4,8 @@ int Signin(void)
 {
     int cmd = 0;
 
+    Init_user_inf();
+
     cmd = Signin_windows(cmd);
 
     cmd = Signin_check_information(cmd);
@@ -15,6 +17,8 @@ int Signin(void)
 
 /*用户信息*/
 Def_User_Inf USER;
+
+
 /*
  * 绘制登录界面并接收指令
  * return CANCEL         取消
@@ -24,7 +28,6 @@ Def_User_Inf USER;
 int Signin_windows(int cmd)
 {
     static int try_times = 0;
-//    Def_User_Inf user;
     FILE * userf;
     int name_flag = 0;
     int inf_flag = 0;
@@ -65,8 +68,9 @@ int Signin_windows(int cmd)
         beginline; printf("$-> 密码:           $-> 取消     ->[1]"); newline;
         beginline; printf("                    $-> 忘记密码 ->[2]"); newline;
         beginline; command_char();
-        get_string(temp_password);
+        get_password(temp_password);
         pass_flag = Check_Password(temp_password, USER.password);
+
         if(pass_flag == CANCEL || pass_flag == FINDPASSWORD)
             return pass_flag;
         if(pass_flag != 0)
@@ -92,7 +96,13 @@ int Signin_windows(int cmd)
         }
 
     }while(pass_flag != 0 );
+    movie();
+    USER.timeflag ++;
 
+    if(USER.timeflag == 1)
+        complate_information();
+
+    mark_log(USER.username, _Signin);
     OnlineFlag = ONLINE;
     return 0;
 }
@@ -187,8 +197,60 @@ int Get_user_inf(Def_User_Inf *userp)
     fread(userp->password, CHAR_SIZE, 20, userf);
     fread(userp->phone, CHAR_SIZE, 20, userf);
     fread(userp->email, CHAR_SIZE, 30, userf);
+    fread(&userp->timeflag, INT_SIZE, 1, userf);
+    fread(&userp->number, INT_SIZE, 1, userf);
+
+    if(userp->timeflag >=1)
+    {
+        fread(userp->address.province, CHAR_SIZE, 30, userf);
+        fread(userp->address.city, CHAR_SIZE, 30, userf);
+        fread(userp->address.block, CHAR_SIZE, 30, userf);
+        fread(userp->address.street, CHAR_SIZE, 30, userf);
+    }
 
     fclose(userf);
 
     return 0;
+}
+
+void movie(void)
+{
+    int i = 0;
+    CLS;
+    endline; endline;
+    for(i = 0;i<120;i++)
+    {
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_GREEN|FOREGROUND_BLUE|BACKGROUND_RED|BACKGROUND_INTENSITY|BACKGROUND_GREEN|BACKGROUND_BLUE);
+        if(i<20 || (i>40 && i<60) || (i>80 && i<100))
+            putchar('/');
+        if((i>=20 && i<=40) || (i>=60 && i<=80) || (i>=100 && i<=120))
+            putchar(' ');
+        Sleep(10);
+    }
+    endline;
+    beginline; middle; printf("登录成功！");
+    Sleep(1200);
+    CLS;
+}
+
+
+void Init_user_inf(void)
+{
+    int i = 0;
+
+    for(i = 0;i<20;i++)
+    {
+        USER.username[i] = '\0';
+        USER.password[i] = '\0';
+        USER.phone[i] = '\0';
+    }
+
+    for(i = 0;i<30;i++)
+    {
+        USER.email[i] = '\0';
+        USER.address.province[i] = '\0';
+        USER.address.city[i] = '\0';
+        USER.address.block[i] = '\0';
+        USER.address.street[i] = '0';
+    }
 }

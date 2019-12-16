@@ -22,19 +22,17 @@ typedef struct
 {
     int flag;
     char username[20];
- //   int usernameLen;
     char password[20];
- //   int passwordLen;
-    char phone[15];
- //   int phoneLen;
+    char phone[20];
     char email[30];
-//    int emailLen;
-    char timeflag;
+    int timeflag;
     Adress_Inf_Buff address;
 
 }User_Inf_Buff;
 
 extern User_Inf_Buff USER_Buff;
+
+void Init_user_inf_buff(void);
 
 int PersonalCenter(void);
 
@@ -50,12 +48,10 @@ int print_information(void);
 
 int check_command_personal(int cmd);
 
-//save information
 int save_information(char *);
 
 int init_buff(void);
 
-//change information
 int change_username(void);
 
 int change_password(void);
@@ -63,5 +59,7 @@ int change_password(void);
 int change_phone(void);
 
 int change_email(void);
+
+int complate_information(void);
 
 #endif // __PERSONAL_H__

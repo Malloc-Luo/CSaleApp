@@ -101,6 +101,11 @@ int prepare_for_program(void)
         _mkdir("D:\\ALessionProject\\Users");
     }
 
+    if(_access("D:\\ALessionProject\\UserLog", 0) == -1)
+    {
+        _mkdir("D:\\ALessionProject\\UserLog");
+    }
+
     if(_access("D:\\ALessionProject\\Manager", 0) == -1)
     {
          _mkdir("D:\\ALessionProject\\Manager");
@@ -110,19 +115,25 @@ int prepare_for_program(void)
          fprintf(fp, "\n\t进入管理员模式：输入特定账号与默认密码\n\t【账号：neu】【密码：123】 ");
          fclose(fp);
 
+         MainUser.times = 0;
+         MainUser.usernumber = 1;
          fp = fopen("D:\\ALessionProject\\Manager\\Administrator.administ", "wb");
          fwrite("123", CHAR_SIZE, 20, fp);
+         fwrite(&MainUser.times, INT_SIZE, 1, fp);
+         fwrite(&MainUser.usernumber, INT_SIZE, 1, fp);
          fclose(fp);
 
-         fp = fopen("D:\\ALessionProject\\Manager\\AllUsers.neu", "wb");
+         fp = fopen("D:\\ALessionProject\\Manager\\AllUsers.neu", "ab+");
          fwrite("neu", CHAR_SIZE, 20, fp);
          fclose(fp);
     }
 
     //获取管理员信息
     strcpy(MainUser.username, "neu");
-    fp = fopen("D:\\ALessionProject\\Manager\\Administrator.administ", "rb+");
+    fp = fopen("D:\\ALessionProject\\Manager\\Administrator.administ", "rb");
     fread(MainUser.password, CHAR_SIZE, 20, fp);
+    fread(&MainUser.times, INT_SIZE, 1, fp);
+    fread(&MainUser.usernumber, INT_SIZE, 1, fp);
     fclose(fp);
 
     return 0;
@@ -162,6 +173,31 @@ int action_mode(void)
     }
 
     return 0;
+}
+
+void get_password(char *password)
+{
+    int i = 0;
+    char buff;
+    while((buff = getch()) != '\r')
+    {
+        fflush(stdin);
+        if(buff == '\b')
+        {
+            i --;
+            password[i] = '\0';
+            putchar('\b');
+            putchar(' ');
+            putchar('\b');
+        }
+        else
+        {
+            password[i] = buff;
+            putchar('*');
+            i ++;
+        }
+    }
+    password[i] = '\0';
 }
 
 

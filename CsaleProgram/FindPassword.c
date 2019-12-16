@@ -20,7 +20,7 @@ int FindPassword_windows(int cmd)
     int flag = 0;
     CLS;
     endline; endline; newline;
-    middle; printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~ÕÒ»ØÃÜÂë~~~~~~~~~~~~~~~~~~~~~~~~~~~~"); endline;
+    middle; printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~Reset password~~~~~~~~~~~~~~~~~~~~~~~~~~~~"); endline;
     beginline; printf("press anyone to continue.."); newline;
     getch();
     CLS;
@@ -71,6 +71,8 @@ int FindPassword_deal(int cmd)
     CLS;
     endline; endline; endline;
     beginline; printf("Reset password successfully!"); newline;
+    mark_log(USER.username, Reset_password);
+
     Sleep(1000);
 
     return 0;

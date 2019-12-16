@@ -16,7 +16,14 @@ int Exit_windows(int cmd)
     int Command = 0;
     system("cls");
     endline; newline;
-    beginline; printf("确认退出？"); newline;
+    if(OnlineFlag == ONLINE)
+    {
+        beginline; printf("注销登录？"); newline;
+    }
+    else
+    {
+        beginline; printf("确认退出？"); newline;
+    }
     beginline; printf("$-> 确认 ->[1]"); newline;
     beginline; printf("$-> 取消 ->[2]"); newline;
     beginline; command_char();
@@ -29,19 +36,11 @@ int Exit_windows(int cmd)
 
 int Exit_callback(int cmd)
 {
-    int Command = 0;
-    switch(cmd)
-    {
-        case 1:
-            Command = _EXIT;
-            break;
-        case 2:
-            Command = CANCEL;
-            break;
-        default:
-            break;
-    }
+    if(cmd == 1)
+        return _EXIT;
+    else
+        return CANCEL;
 
-    return Command;
+    return 0;
 }
 

@@ -16,7 +16,7 @@ int Help_windows(int cmd)
     system("help.html");
 
     endline; newline;
-    beginline; printf("按任意键继续.."); newline;
+    beginline; printf("press anyone to continue.."); newline;
     beginline; command_char();
     getch();
 
