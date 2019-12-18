@@ -200,7 +200,7 @@ int Get_user_inf(Def_User_Inf *userp)
     fread(&userp->timeflag, INT_SIZE, 1, userf);
     fread(&userp->number, INT_SIZE, 1, userf);
 
-    if(userp->timeflag >=1)
+    if(userp->timeflag >0)
     {
         fread(userp->address.province, CHAR_SIZE, 30, userf);
         fread(userp->address.city, CHAR_SIZE, 30, userf);
@@ -254,3 +254,5 @@ void Init_user_inf(void)
         USER.address.street[i] = '0';
     }
 }
+
+
