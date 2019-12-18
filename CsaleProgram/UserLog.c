@@ -49,7 +49,7 @@ int mark_log(char * name, ACTION action)
 void open_user_log(char *name)
 {
     CLS;
-    char filepath[] = "D:\\ALessionProject\\UserLog\\";
+    char filepath[80] = "D:\\ALessionProject\\UserLog\\";
     char type[] = ".txt";
     strcat(filepath, name);
     strcat(filepath, type);
